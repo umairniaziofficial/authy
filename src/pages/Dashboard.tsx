@@ -13,6 +13,7 @@ import {
   FiSearch,
   FiMenu,
   FiX,
+  FiLogOut,
 } from "react-icons/fi";
 import {
   Card,
@@ -138,6 +139,11 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log("Logging out...");
+  };
 
   return (
     <div className={`flex min-h-screen bg-background ${theme}`}>
@@ -269,6 +275,19 @@ export default function Dashboard() {
                 />
                 <AvatarFallback>👤</AvatarFallback>
               </Avatar>
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={handleLogout}
+                  className="text-red-500 hover:text-red-700 hover:bg-red-100"
+                >
+                  <FiLogOut className="h-5 w-5" />
+                </Button>
+              </motion.div>
             </div>
           </div>
         </header>
