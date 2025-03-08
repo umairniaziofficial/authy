@@ -127,9 +127,15 @@ export default function ChatApp() {
       {/* Header */}
       <header className="bg-background border-b sticky top-0 z-10">
         <div className="flex items-center justify-between p-2 sm:p-4 flex-wrap">
-          <div className="flex items-center gap-2">
-            <h1 className="text-lg sm:text-xl font-bold text-primary">Authy Chat App</h1>
-          </div>
+            <div className="flex items-center gap-2">
+            <img 
+              src="/vite.svg" 
+              alt="Authy Logo" 
+              className="h-8 w-8 sm:h-10 sm:w-10"
+              draggable="false"
+            />
+            <span className="text-xl font-semibold sm:block">Authy</span>
+            </div>
           <div className="flex items-center space-x-2 sm:space-x-4">
             <div className="flex items-center gap-1 sm:gap-2">
               {currentUser && (
