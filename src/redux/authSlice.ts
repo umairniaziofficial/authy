@@ -136,7 +136,7 @@ export const resetPassword = createAsyncThunk(
 
 export const sendVerificationEmail = createAsyncThunk(
     'auth/sendVerificationEmail',
-    async (_, { getState, rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
         try {
             const user = auth.currentUser;
             if (user) {
