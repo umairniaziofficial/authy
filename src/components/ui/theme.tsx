@@ -9,10 +9,8 @@ type ThemeColors = {
 };
 
 export function createTheme(colors: ThemeColors) {
-  // Create a unique class name for this theme
   const themeClass = `theme-${Math.random().toString(36).substring(2, 9)}`;
 
-  // Create CSS variables for the theme
   const style = document.createElement("style");
   style.innerHTML = `
     .${themeClass} {

@@ -1,15 +1,51 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { HiLockClosed } from "react-icons/hi";
-import { Link } from "react-router-dom";
-import { toast, Toaster } from "sonner";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { resetPassword } from "@/redux/authSlice";
+import { AppDispatch } from "@/redux/store";
+import { useAuth } from "@/hooks/useAuth";
 
 const ResetPassword = () => {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [email, setEmail] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { isLoading, isAuthenticated } = useAuth();
+
+  if (isAuthenticated) {
+    navigate("/");
+  }
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Password reset successfully!");
+    
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    try {
+      const resultAction = await dispatch(resetPassword(email));
+      
+      if (resetPassword.fulfilled.match(resultAction)) {
+        toast.success("Password reset email sent successfully!");
+        setEmailSent(true);
+      } else {
+        toast.error("Failed to send reset email. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Failed to send reset email. Please try again.");
+    }
   };
 
   return (
@@ -42,7 +78,7 @@ const ResetPassword = () => {
                 className="text-3xl font-bold"
                 style={{ color: "#FF004D" }}
               >
-                Reset Password
+                {emailSent ? "Check Your Email" : "Reset Password"}
               </motion.h2>
               <motion.p
                 initial={{ opacity: 0 }}
@@ -50,69 +86,85 @@ const ResetPassword = () => {
                 transition={{ delay: 0.3 }}
                 className="text-gray-600"
               >
-                Enter your new password below
+                {emailSent 
+                  ? `We've sent a password reset link to ${email}`
+                  : "Enter your email to receive a password reset link"}
               </motion.p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <motion.div
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="space-y-2"
-              >
-                <Label htmlFor="password">New Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter new password"
-                  className="w-full focus-visible:ring-[#FF004D] focus-visible:border-0 focus-visible:ring-2"
-                />
-              </motion.div>
+            {!emailSent ? (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <motion.div
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="space-y-2"
+                >
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    placeholder="Enter your email"
+                    className="w-full focus-visible:ring-[#FF004D] focus-visible:border-0 focus-visible:ring-2"
+                    required
+                  />
+                </motion.div>
 
-              <motion.div
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="space-y-2"
-              >
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  placeholder="Confirm new password"
-                  className="w-full focus-visible:ring-[#FF004D] focus-visible:border-0 focus-visible:ring-2"
-                />
-              </motion.div>
-
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="space-y-4"
+                >
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    style={{ backgroundColor: "#FF004D" }}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Sending..." : "Reset Password"}
+                  </Button>
+                </motion.div>
+              </form>
+            ) : (
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="space-y-4"
+                transition={{ delay: 0.4 }}
+                className="space-y-4 mt-6"
               >
+                <p className="text-sm text-gray-600">
+                  Follow the instructions in the email to reset your password.
+                </p>
                 <Button
-                  type="submit"
-                  className="w-full"
-                  style={{ backgroundColor: "#FF004D" }}
+                  onClick={() => setEmailSent(false)}
+                  variant="outline"
+                  className="w-full border-[#FF004D] text-[#FF004D] hover:bg-pink-50"
                 >
-                  Reset Password
+                  Use a different email
                 </Button>
-
-                <Link to="/login">
-                  <Button
-                    variant="ghost"
-                    className="w-full text-[#FF004D] hover:bg-pink-50"
-                  >
-                    Back to Login
-                  </Button>
-                </Link>
               </motion.div>
-            </form>
+            )}
+
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Link to="/login">
+                <Button
+                  variant="ghost"
+                  className="w-full text-[#FF004D] hover:bg-pink-50 mt-2"
+                >
+                  Back to Login
+                </Button>
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </div>
-      <Toaster />
     </motion.div>
   );
 };

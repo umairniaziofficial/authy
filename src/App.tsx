@@ -1,19 +1,40 @@
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import Chat from "./pages/Chat";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
-import Verficiation from "./pages/auth/Verficiation";
+import Verification from "./pages/auth/Verficiation";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Toaster } from "./components/ui/sonner";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/verficiation" element={<Verficiation />} />
-      <Route path="/forgot-password" element={<ResetPassword />} />
-    </Routes>
+    <Provider store={store}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/verification"
+          element={
+            <ProtectedRoute requiresVerification={false}>
+              <Verification />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/forgot-password" element={<ResetPassword />} />
+      </Routes>
+      <Toaster />
+    </Provider>
   );
 };
 export default App;

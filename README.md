@@ -1,54 +1,124 @@
-# React + TypeScript + Vite
+# 🔐 Authy: A React Firebase Authentication App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Authy is a full-featured authentication application built with React, Firebase, and Redux. This project demonstrates a complete authentication flow including email/password login, Google authentication, email verification, and password reset functionality. It also includes a real-time chat feature to demonstrate protected routes and Firebase Firestore integration.
 
-Currently, two official plugins are available:
+![Authy Screenshot](https://via.placeholder.com/800x400.png?text=Authy+Screenshot)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 👤 User authentication (Email/Password & Google Sign-in)
+- 📧 Email verification system
+- 🔑 Password reset functionality
+- 💬 Real-time chat with Firestore
+- 🔒 Protected routes based on authentication status
+- 🎨 Modern UI with Tailwind CSS and shadcn/ui components
+- 🚀 Redux Toolkit for state management
+- 📱 Responsive design for all screen sizes
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- A Firebase project
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd authy
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
+# or
+yarn
 ```
+
+3. Create a `.env` file in the root directory with your Firebase configuration:
+
+### Firebase Setup
+
+1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+2. Enable Authentication and select the sign-in methods:
+   - Email/Password
+   - Google
+3. Create a Firestore database with the following collection:
+   - `messages` - to store chat messages
+
+### Running the Application
+
+To start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The application will be available at [http://localhost:5173/](http://localhost:5173/) (or another port if 5173 is already in use).
+
+## 📁 Project Structure
+
+### 🔒 Authentication Flow
+
+- **Sign Up**: Users can create an account with email/password or Google authentication.
+- **Email Verification**: After signing up, users must verify their email to access the chat feature.
+- **Login**: Existing users can log in with their email/password or Google account.
+- **Password Reset**: Users can request a password reset if they forget their password.
+
+### 💬 Chat Functionality
+
+The chat feature demonstrates:
+
+- Real-time updates using Firestore
+- User identification
+- Timestamp-based message sorting
+- Message ownership UI differences
+
+## ⚙️ Environment Variables
+
+You must create a `.env` file in the project root with the following variables from your Firebase project:
+
+| Variable                          | Description                             |
+| --------------------------------- | --------------------------------------- |
+| VITE_FIREBASE_API_KEY             | Firebase Web API Key                    |
+| VITE_FIREBASE_AUTH_DOMAIN         | Firebase Auth Domain                    |
+| VITE_FIREBASE_PROJECT_ID          | Firebase Project ID                     |
+| VITE_FIREBASE_STORAGE_BUCKET      | Firebase Storage Bucket                 |
+| VITE_FIREBASE_MESSAGING_SENDER_ID | Firebase Messaging Sender ID            |
+| VITE_FIREBASE_APP_ID              | Firebase Application ID                 |
+| VITE_FIREBASE_MEASUREMENT_ID      | Firebase Measurement ID (for Analytics) |
+
+### To obtain these values:
+
+1. Go to your Firebase project console
+2. Click on "Project settings" (gear icon)
+3. Scroll down to "Your apps" section
+4. Select your web app or create a new one
+5. Find the Firebase SDK configuration values
+
+## 🛠️ Built With
+
+- [React](https://reactjs.org/) - The web framework used
+- [Vite](https://vitejs.dev/) - Frontend tooling
+- [Firebase](https://firebase.google.com/) - Authentication and database
+- [Redux Toolkit](https://redux-toolkit.js.org/) - State management
+- [Tailwind CSS](https://tailwindcss.com/) - CSS framework
+- [shadcn/ui](https://ui.shadcn.com/) - UI component collection
+- [Framer Motion](https://www.framer.com/motion/) - Animation library
+- [React Router](https://reactrouter.com/) - Routing
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 🙏 Acknowledgments
+
+- [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
+- [Firebase](https://firebase.google.com/) for the authentication and database services
