@@ -28,7 +28,7 @@ Authy is a full-featured authentication application built with React, Firebase, 
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/umairniaziofficial/authy.git
 cd authy
 ```
 
@@ -122,3 +122,8 @@ This project is licensed under the MIT License.
 
 - [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
 - [Firebase](https://firebase.google.com/) for the authentication and database services
+
+---
+
+🔗 **GitHub Repository:** [Authy](https://github.com/umairniaziofficial/authy)
+
