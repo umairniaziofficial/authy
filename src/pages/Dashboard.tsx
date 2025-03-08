@@ -279,8 +279,8 @@ export default function Dashboard() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   onClick={handleLogout}
                   className="text-red-500 hover:text-red-700 hover:bg-red-100"
